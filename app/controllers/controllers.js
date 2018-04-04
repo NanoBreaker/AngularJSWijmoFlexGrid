@@ -4,12 +4,88 @@ var MyFirstController = function($scope, $http, userData, userGravatar, gitHubUs
 
 var MyJSONController = function ($scope, $http) {
 
+    $scope.file_data = '';
+    $scope.risk_level = 0;
+
+    $scope.add = function() {
+        var f = document.getElementById('file').files[0],
+            fileReader = new FileReader();
+
+        fileReader.readAsBinaryString(f);
+
+        fileReader.onloadend = function (e) {
+            var json_data = e.target.result;
+            $scope.query = JSON.parse(json_data);
+            $scope.file_data = json_data;
+            $scope.show_json_output = true;
+            //send your binary data via $http or $resource or do anything else with it
+        }
+    }
+
+    $scope.add_query1 = function () {
+        $http.get('multiLevelHeaders.json').success(function (data) {
+            $scope.query = data;
+            $scope.show_json_output = true;
+            var DOMElemnt = document.getElementById('myFlexGrid');
+            var grid = wijmo.Control.getControl(DOMElemnt);
+            grid.dispose();
+            createDataTable(data);
+        })
+    }
+
+    $scope.add_query2 = function () {
+        $http.get('query_1.json').success(function (data) {
+            $scope.query = data;
+            $scope.show_json_output = true;
+            var DOMElemnt = document.getElementById('myFlexGrid');
+            var grid = wijmo.Control.getControl(DOMElemnt);
+            grid.dispose();
+            createDataTable(data);
+        })
+    }
+
+    $scope.add_query3 = function () {
+        $http.get('query.json').success(function (data) {
+            $scope.query = data;
+            $scope.show_json_output = true;
+            var DOMElemnt = document.getElementById('myFlexGrid');
+            var grid = wijmo.Control.getControl(DOMElemnt);
+            grid.dispose();
+            createDataTable(data);
+        })
+    }
+
+    $scope.check_json_output_state = function () {
+        if($scope.show_json_output == true){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     $http.get('query_1.json').success(function (data) {
         $scope.query = data;
         createDataTable(data);
     })
 
     function createDataTable(data) {
+
+        //Initializing my FlexGrid table
+        var grid = new wijmo.grid.FlexGrid('#myFlexGrid', {
+            loadedRows: function(s, e) {
+                s.autoSizeColumns();
+                s.autoSizeRows();
+
+            },
+            cellEditEnded: function(s, e) {
+                s.autoSizeColumns(e.col);
+                s.autoSizeRows(e.row);
+            },
+            rowEditEnded: function(s, e){
+                s.autoSizeColumns();
+                s.autoSizeRow(e.row);
+            }
+        });
         var itemSourceStartPosition   = getItemSourceStartPosition(data);
         var flexGridTableNumberOfRows = getMaxRow(data);
         var flexGridTableNumberOfCols = getMaxCol(data);
@@ -100,23 +176,6 @@ var MyJSONController = function ($scope, $http) {
         }
         console.log(itemSourceArray);
 
-        //Initializing my FlexGrid table
-        var grid = new wijmo.grid.FlexGrid('#myFlexGrid', {
-            loadedRows: function(s, e) {
-                s.autoSizeColumns();
-                s.autoSizeRows();
-
-            },
-            cellEditEnded: function(s, e) {
-                s.autoSizeColumns(e.col);
-                s.autoSizeRows(e.row);
-            },
-            rowEditEnded: function(s, e){
-                s.autoSizeColumns();
-                s.autoSizeRow(e.row);
-            }
-        });
-
         //Creating Rows and Columns
         while (grid.columns.length < flexGridTableNumberOfCols - itemSourceStartPosition.col + 1) {
             grid.columns.push(new wijmo.grid.Column());
@@ -168,33 +227,8 @@ var MyJSONController = function ($scope, $http) {
         grid.autoSizeColumns(0, grid.cols.length, true);*/
 
         grid.mergeManager = new wijmo.grid.CustomMergeManager(grid);
-        //grid.columns[0].width="*";
+        grid.columns[0].width="*";
 
-        // use tooltip to show hit-test information
-        var tt = new wijmo.Tooltip();
-        var tip = '';
-        grid.hostElement.addEventListener('mousemove', function(e) {
-            var ht = grid.hitTest(e);
-            if (ht.panel) {
-                var newTip = wijmo.format('cellType: <b>{panel}</b><br/>row: <b>{row}</b><br/>column: <b>{col}</b><br>value: <b>{val}</b>', {
-                    panel: wijmo.grid.CellType[ht.cellType],
-                    row: ht.row,
-                    col: ht.col,
-                    val: ht.panel.getCellData(ht.row, ht.col, true)
-                });
-                if (newTip != tip) {
-                    tip = newTip;
-                    tt.show(ht.panel.hostElement.parentElement, tip, ht.panel.getCellBoundingRect(ht.row, ht.col));
-                }
-            } else {
-                tt.hide();
-                tip = '';
-            }
-        });
-        theGrid.hostElement.addEventListener('mouseleave', function() {
-            tt.hide();
-            tip = '';
-        })
 
         // show the effect of the headersVisibility property
         var headersVisibility = new wijmo.input.ComboBox('#headersVisibility', {
@@ -203,12 +237,6 @@ var MyJSONController = function ($scope, $http) {
             selectedIndexChanged: function(s, e) {
                 grid.headersVisibility = s.text;
             }
-        });
-
-        // add a 'grid-panel' class to all grid panel hosts
-        var panels = 'topLeftCells,columnHeaders,rowHeaders,cells,bottomLeftCells,columnFooters'.split(',');
-        panels.forEach(function(p) {
-            grid[p].hostElement.parentElement.classList.add('grid-panel');
         });
 
         function getItemSourceStartPosition(json_string){

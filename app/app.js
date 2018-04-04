@@ -1,1 +1,1 @@
-var app = angular.module('myfirstangularapp', ['wj']);
+var app = angular.module('myfirstangularapp', ['wj', 'ngMaterial']);
