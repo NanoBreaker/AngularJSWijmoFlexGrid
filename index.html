@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html ng-app="myfirstangularapp">
+
+<head>
+    <meta charset="utf-8" />
+    <title>AngularJS - Sebastian Brukalo</title>
+    <link data-require="bootstrap@*" data-semver="3.3.2" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script data-require="bootstrap@*" data-semver="3.3.2" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Wijmo references (required) -->
+    <script src="http://cdn.wijmo.com/5.20173.409/controls/wijmo.min.js"></script>
+    <link href="http://cdn.wijmo.com/5.20173.409/styles/wijmo.min.css" rel="stylesheet"/>
+
+    <!-- Wijmo controls (optional, include the controls you need) -->
+    <script src="http://cdn.wijmo.com/5.20173.409/controls/wijmo.grid.min.js"></script>
+    <script src="http://cdn.wijmo.com/5.20173.409/controls/wijmo.chart.min.js"></script>
+    <script src="http://cdn.wijmo.com/5.20173.409/controls/wijmo.input.min.js"></script>
+    <script src="http://cdn.wijmo.com/5.20173.409/controls/wijmo.gauge.min.js"></script>
+
+    <!-- AngularJS and Wijmo directives (optional, use in AngularJS applications) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script src="http://cdn.wijmo.com/5.20173.409/interop/angular/wijmo.angular.min.js"></script>
+
+</head>
+
+<body>
+<div class="container">
+
+        <div ng-controller="MyJSONController">
+
+            <table class="table table-striped">
+                <tr>
+                    <th>Номер колонки</th>
+                    <th>Номер ряда</th>
+                    <th>Ширина (Cols)</th>
+                    <th>Высота (Rows)</th>
+                    <th>IsHeader</th>
+                    <th>Значение</th>
+                </tr>
+                <tr ng-repeat="cell in query.Cells">
+                    <th>{{cell.Col}}</th>
+                    <th>{{cell.Row}}</th>
+                    <th>{{cell.Cols}}</th>
+                    <th>{{cell.Rows}}</th>
+                    <th>{{cell.IsHeader}}</th>
+                    <th>{{cell.Value}}</th>
+                </tr>
+            </table>
+
+            <div id="myFlexGrid">
+
+            </div>
+
+            <pre>{{query | json}}</pre>
+        </div>
+
+</div>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
+<script src="app/app.js"></script>
+<script src="app/controllers/controllers.js"></script>
+<script src="app/filters/filters.js"></script>
+<script src="app/services/services.js"></script>
+<script src="app/directives/directives.js"></script>
+<script src="app/CustomMergeManager.js"></script>
+</body>
+</html>

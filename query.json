@@ -1,0 +1,82 @@
+{
+  "Cols":[
+
+  ],
+  "Cells":[
+    {
+      "Col":1,
+      "IsEditable":false,
+      "Type":"string",
+      "Cols":1,
+      "Sortable":false,
+      "Filterable":false,
+      "Value":"My first header",
+      "Row":1,
+      "IsHeader":true,
+      "Rows":1
+    },
+    {
+      "Col":2,
+      "IsEditable":false,
+      "Type":"string",
+      "Cols":1,
+      "Sortable":false,
+      "Filterable":false,
+      "Value":"My second header",
+      "Row":1,
+      "IsHeader":true,
+      "Rows":1
+    },
+    {
+      "Col":3,
+      "IsEditable":false,
+      "Type":"string",
+      "Cols":1,
+      "Sortable":false,
+      "Filterable":false,
+      "Value":"Another header",
+      "Row":1,
+      "IsHeader":true,
+      "Rows":1
+    },
+    {
+      "Col":1,
+      "IsEditable":false,
+      "Type":"string",
+      "Cols":1,
+      "Sortable":false,
+      "Filterable":false,
+      "Value":"Just one more header",
+      "Row":2,
+      "IsHeader":true,
+      "Rows":1
+    },
+    {
+      "Col":2,
+      "IsEditable":true,
+      "Type":"",
+      "Cols":1,
+      "Sortable":false,
+      "Filterable":false,
+      "Value":"70,000",
+      "Row":2,
+      "IsHeader":false,
+      "CellContext":{
+        "endDate":"2017-12-31",
+        "conceptId":460304,
+        "closedAxisList":[
+
+        ],
+        "openAxisesList":[
+
+        ],
+        "startDate":"2017-12-31"
+      },
+      "Rows":1
+    },
+    {  }
+  ],
+  "HeaderZList":[
+
+  ]
+}

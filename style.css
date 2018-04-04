@@ -1,0 +1,14 @@
+.wj-flexgrid {
+    font-size: 10px;
+    margin: 10px 0;
+}
+
+#myFlexGrid.wj-flexgrid .wj-cell {
+    padding: 10px;
+    vertical-align: middle;
+}
+
+#myFlexGrid .wj-cells .wj-cell:not(.wj-state-selected):not(.wj-state-multi-selected):hover {
+    background-color:rgb(200,255,200);
+    transition: all 0.5s;
+}
