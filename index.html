@@ -61,13 +61,13 @@
                 <md-button class="md-raised md-warn" ng-click="add()">Отобразить загруженный TableLink</md-button>
             </div>
 
-            <md-toolbar class="md-warn" layout-align="center center">
+            <md-toolbar ng-show="check_json_output_state()" class="md-warn" layout-align="center center">
                 <div class="md-toolbar-tools">
                     <h2 class="md-flex">Визуализация таблицы: </h2>
                 </div>
             </md-toolbar>
-            <md-content class="md-whiteframe-4dp" style="width: 100%">
-                <div id="myFlexGrid"></div>
+            <md-content ng-show="check_json_output_state()" class="md-whiteframe-4dp" style="width: 100%">
+                <div items-source-changed="itemsSourceChanged(s,e)" id="myFlexGrid"></div>
             </md-content>
 
             <md-toolbar ng-show="check_json_output_state()" class="md-warn" layout-align="center center">
@@ -75,7 +75,7 @@
                     <h2 class="md-flex">загруженный JSON объект: </h2>
                 </div>
             </md-toolbar>
-            <md-content ng-show="check_json_output_state()" id="json_output" class="md-whiteframe-4dp" style="height: 50%" flex>
+            <md-content ng-show="check_json_output_state()" id="json_output" class="md-whiteframe-4dp" style="width: 100%" flex="">
                 <pre> {{query | json}} </pre>
             </md-content>
 

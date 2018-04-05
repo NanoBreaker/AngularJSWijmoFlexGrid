@@ -1,7 +1,3 @@
-var MyFirstController = function($scope, $http, userData, userGravatar, gitHubUserLookup) {
-
-};
-
 var MyJSONController = function ($scope, $http) {
 
     $scope.file_data = '';
@@ -18,22 +14,15 @@ var MyJSONController = function ($scope, $http) {
             $scope.query = JSON.parse(json_data);
             $scope.file_data = json_data;
             $scope.show_json_output = true;
+            var DOMElemnt = document.getElementById('myFlexGrid');
+            var grid = wijmo.Control.getControl(DOMElemnt);
+            grid.dispose();
+            createDataTable($scope.query);
             //send your binary data via $http or $resource or do anything else with it
         }
     }
 
     $scope.add_query1 = function () {
-        $http.get('multiLevelHeaders.json').success(function (data) {
-            $scope.query = data;
-            $scope.show_json_output = true;
-            var DOMElemnt = document.getElementById('myFlexGrid');
-            var grid = wijmo.Control.getControl(DOMElemnt);
-            grid.dispose();
-            createDataTable(data);
-        })
-    }
-
-    $scope.add_query2 = function () {
         $http.get('query_1.json').success(function (data) {
             $scope.query = data;
             $scope.show_json_output = true;
@@ -44,8 +33,19 @@ var MyJSONController = function ($scope, $http) {
         })
     }
 
+    $scope.add_query2 = function () {
+        $http.get('query_2.json').success(function (data) {
+            $scope.query = data;
+            $scope.show_json_output = true;
+            var DOMElemnt = document.getElementById('myFlexGrid');
+            var grid = wijmo.Control.getControl(DOMElemnt);
+            grid.dispose();
+            createDataTable(data);
+        })
+    }
+
     $scope.add_query3 = function () {
-        $http.get('query.json').success(function (data) {
+        $http.get('query_3.json').success(function (data) {
             $scope.query = data;
             $scope.show_json_output = true;
             var DOMElemnt = document.getElementById('myFlexGrid');
@@ -73,9 +73,8 @@ var MyJSONController = function ($scope, $http) {
         //Initializing my FlexGrid table
         var grid = new wijmo.grid.FlexGrid('#myFlexGrid', {
             loadedRows: function(s, e) {
-                s.autoSizeColumns();
-                s.autoSizeRows();
-
+                s.autoSizeColumns(e.col);
+                s.autoSizeRows(e.row);
             },
             cellEditEnded: function(s, e) {
                 s.autoSizeColumns(e.col);
@@ -229,7 +228,6 @@ var MyJSONController = function ($scope, $http) {
         grid.mergeManager = new wijmo.grid.CustomMergeManager(grid);
         grid.columns[0].width="*";
 
-
         // show the effect of the headersVisibility property
         var headersVisibility = new wijmo.input.ComboBox('#headersVisibility', {
             itemsSource: 'None,Row,Column,All'.split(','),
@@ -279,5 +277,4 @@ var MyJSONController = function ($scope, $http) {
 
 }
 
-app.controller("MyFirstController", MyFirstController);
 app.controller("MyJSONController", MyJSONController);
